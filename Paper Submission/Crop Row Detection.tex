@@ -56,7 +56,11 @@ In precision agriculture, extracted crop row and inter-row information serves as
 This paper is structured as follows. In Section A, the hardware setup for aerial imagery data acquisition is detailed. Section B explains the image processing procedure, including image splitting and the application of two methods—K-means clustering and the U-Net model—for detecting plants from aerial images. Section C describes the crop row detection process, utilizing both linear regression and the Hough transform. Section D outlines the path detection process. In Section E, the reconstruction of the split images is addressed. Finally, Section F explains the conversion of local waypoint positions in the images to global coordinates.
 
 \section{Methodology}
-
+\begin{figure}[htbp]
+\includegraphics[width=\linewidth]{Block Diagram.png}
+\caption{Pipeline of waypoint detectopn using aerial images}
+\label{fig1}
+\end{figure}
 
 \subsection{Data Acquisition}
 The initial step in this research involves acquiring essential environmental data, including aerial images and the global coordinates of the camera at the time of image capture. This data is crucial for converting the local pixel positions in the images into global coordinates. Various cameras, such as Sequoia, RedEdge, Micasense, and DJI Zenmuse X7, were considered based on their technical properties and available resources. The GoPro Hero 4 camera was selected for this project because it captures high-resolution RGB images at a high frame rate. Although it lacks NIR and thermal capabilities, RGB images are sufficient for the image processing algorithms used in this study. In addition to aerial images, global coordinates are obtained using a Ublox-Neo-6m GPS module, which transmits the data from the camera’s location to the processing unit. The camera’s height is predefined rather than measured and transmitted in real-time to simplify the setup.
@@ -65,14 +69,16 @@ The initial step in this research involves acquiring essential environmental dat
 \subsection{Image Processing}
 This section focuses on the crucial task of crop detection within the captured images, which is essential for identifying crop rows and determining the path for subsequent operations. The process begins with a preprocessing step that converts the raw images into a format compatible with the models used for detection. Two crop detection methods, K-means and Unet, are then implemented, with a detailed explanation of each approach. The performance of these models is compared to select the most effective one for this application. Additionally, insights from previous studies using these algorithms inform the analysis.
 
+
+
+\subsubsection{Preprocessing}
+High-resolution aerial images covering large areas are typically too large to use in machine learning algorithms directly. To address this, the images are initially split into equal-sized sections, making them manageable for algorithmic processing. The size of these sections is determined by the specific requirements of the algorithms used, ensuring compatibility and optimized performance. Maintaining uniform image sizes across all sections enhances processing speed and efficiency.
+
 \begin{figure}[htbp]
 \includegraphics[width=\linewidth]{Aerial Image2.png}
 \caption{An example of aerial images}
 \label{fig1}
 \end{figure}
-
-\subsubsection{Preprocessing}
-High-resolution aerial images covering large areas are typically too large to use in machine learning algorithms directly. To address this, the images are initially split into equal-sized sections, making them manageable for algorithmic processing. The size of these sections is determined by the specific requirements of the algorithms used, ensuring compatibility and optimized performance. Maintaining uniform image sizes across all sections enhances processing speed and efficiency.
 
 \subsubsection{Crop Detection}
 This project's most computationally intensive aspect is crop detection, which is crucial in ensuring accurate outcomes for subsequent procedures. A well-defined layer mask for field images is essential, as the crop detection system must effectively distinguish plants and crops from other objects, including background soil and unwanted vegetation such as grass and weeds. 
@@ -87,17 +93,17 @@ A binary K-means clustering algorithm was developed and applied to group the whi
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Kmeans.png}
-        \caption{K-means clustering application}
-        \label{fig:kmeans}
+        \caption{}
+        \label{fig2:kmeans}
     \end{subfigure}\hfill
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
         \includegraphics[width=\linewidth]{Dryoutputgrass.png}
-        \caption{Color filtering result}
-        \label{fig:filtering}
+        \caption{}
+        \label{fig2:filtering}
     \end{subfigure}
-    \caption{Crop Detection methods: a) Using Color filtering and Kmeans clustering. b) Using Unet model}
-    \label{fig:combined}
+    \caption{Crop Detection methods using (a) Color filtering and Kmeans clustering. (b) Unet model}
+    \label{fig2:combined}
 \end{figure}
 
 \paragraph{Unet-Based Image Segmentation}
@@ -105,7 +111,11 @@ Although the color filtering method demonstrated satisfactory performance, it st
 
 Access to a suitable dataset is essential to train a machine learning model. For this purpose, the vineyard aerial images dataset [REF] was employed, which includes annotated layer masks indicating the positions of plants within the images. The images were initially split into equal-sized segments of 128 by 128 pixels to ensure consistency in the input to the model, eliminating the need for resizing during processing. Subsequently, a Unet model was defined and compiled based on the architecture outlined in [REF]. The model achieved a final accuracy of 96\%\, which was obtained after seven epochs, with early stopping criteria applied. This result confirms that the Unet model can effectively capture image features and accurately segment the crop areas.
 
-
+\begin{figure}[htbp]
+\includegraphics[width=\linewidth]{UNET.png}
+\caption{Unet model architecture}
+\label{fig3}
+\end{figure}
 
 \subsection{Crop Row Detection}
 Crop row detection involves assigning a line with a defined slope and intercept to each crop row. Based on the binary mask of segmented crops obtained in the previous step, lines must be fitted to the pixels to minimize the least square error from the line. This study analyzed and implemented two approaches—linear regression and the Hough Transform—for this purpose.
@@ -122,17 +132,17 @@ Another widely used solution for crop row detection is the Hough Transform. This
 
 \begin{figure}[htbp]
 \includegraphics[width=\linewidth]{Hough initial2.png}
-\caption{An example of aerial images}
-\label{fig1}
+\caption{Initial crop row detection using Hough transform}
+\label{fig3}
 \end{figure}
 
 \subsection{Path Waypoint Detection}
 Defining waypoints becomes straightforward once the crop rows have been established. Initially, a path is defined as a line parallel to the crop rows and equidistant from two neighboring crop rows. A predefined number of equally spaced points are selected along each path line. The coordinates of these points are recorded for use in subsequent steps. FIGURE
 
 \begin{figure}[htbp]
-\includegraphics[width=\linewidth]{Hough initial2.png}
-\caption{An example of aerial images}
-\label{fig1}
+\includegraphics[width=\linewidth]{Hough Revised2.png}
+\caption{Modified crop row detction using Hough transform}
+\label{fig4}
 \end{figure}
 
 
