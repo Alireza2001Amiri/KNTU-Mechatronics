@@ -55,18 +55,18 @@ In precision agriculture, extracted crop row and inter-row information serves as
 
 This paper is structured as follows. In Section A, the hardware setup for aerial imagery data acquisition is detailed. Section B explains the image processing procedure, including image splitting and the application of two methods—K-means clustering and the U-Net model—for detecting plants from aerial images. Section C describes the crop row detection process, utilizing both linear regression and the Hough transform. Section D outlines the path detection process. In Section E, the reconstruction of the split images is addressed. Finally, Section F explains the conversion of local waypoint positions in the images to global coordinates.
 
-\section{Methodology}
 \begin{figure}[htbp]
 \includegraphics[width=\linewidth]{Block Diagram.png}
-\caption{Pipeline of waypoint detectopn using aerial images}
+\caption{Pipeline of waypoint detection using aerial images}
 \label{fig1}
 \end{figure}
 
-\subsection{Data Acquisition}
-The initial step in this research involves acquiring essential environmental data, including aerial images and the global coordinates of the camera at the time of image capture. This data is crucial for converting the local pixel positions in the images into global coordinates. Various cameras, such as Sequoia, RedEdge, Micasense, and DJI Zenmuse X7, were considered based on their technical properties and available resources. The GoPro Hero 4 camera was selected for this project because it captures high-resolution RGB images at a high frame rate. Although it lacks NIR and thermal capabilities, RGB images are sufficient for the image processing algorithms used in this study. In addition to aerial images, global coordinates are obtained using a Ublox-Neo-6m GPS module, which transmits the data from the camera’s location to the processing unit. The camera’s height is predefined rather than measured and transmitted in real-time to simplify the setup.
+\section{Data Acquisition}
+The first step of this research focuses on gathering essential environmental data, including aerial imagery and the corresponding global coordinates of the camera at the time of image capture. This data is critical for converting local pixel positions in the images into global coordinates, a process necessary for accurate spatial analysis.
+Several camera systems, such as the Sequoia, RedEdge, Micasense, and DJI Zenmuse X7, were considered based on their technical specifications and the resources available for this study. After careful evaluation, the GoPro Hero 4 was chosen due to its ability to capture high-resolution RGB images at a high frame rate. Although this camera lacks near-infrared (NIR) and thermal imaging capabilities, the RGB imagery it provides is well-suited to the image processing algorithms employed in this research.
+In addition to aerial images, global positioning data is acquired using a Ublox-Neo-6m GPS module, which transmits the camera’s location to the processing unit. To further streamline the system, the camera's altitude is predefined, rather than measured and transmitted in real-time, allowing for a more straightforward setup without compromising the precision needed for the study.
 
-
-\subsection{Image Processing}
+\section{Image Processing}
 This section focuses on the crucial task of crop detection within the captured images, which is essential for identifying crop rows and determining the path for subsequent operations. The process begins with a preprocessing step that converts the raw images into a format compatible with the models used for detection. Two crop detection methods, K-means and Unet, are then implemented, with a detailed explanation of each approach. The performance of these models is compared to select the most effective one for this application. Additionally, insights from previous studies using these algorithms inform the analysis.
 
 
@@ -149,7 +149,7 @@ Defining waypoints becomes straightforward once the crop rows have been establis
 \subsection{Reconstruction of Aerial Image}
 Following the image splitting described in section B.1, the image processing tasks outlined earlier will be applied to each segment of the leading aerial image. The goal is to determine and record the waypoint coordinates within each segment. Once the waypoint coordinates are computed, the initial image must be reconstructed and assembled. Subsequently, the waypoint coordinates need to be converted to align with the coordinates of the newly assembled image.
 
-\subsection{Image Coordination to Global Coordination Conversion}
+\section{Image Coordination to Global Coordination Conversion}
 An analytical approach and mathematical algorithm are required to obtain the corresponding global coordinates of the points identified in the images. This process involves using the global coordinates of the camera at the time of image capture, along with the camera's height. The conversion process is broken down into two phases: first, converting pixel coordinates into meter distances, and second, converting these meter distances into the global coordinate system.
 
 \subsubsection{Pixel to Meter Conversion}
