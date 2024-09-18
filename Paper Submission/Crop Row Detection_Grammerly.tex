@@ -117,7 +117,7 @@ Figure
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{Kmeans.png}
+\includegraphics[width=\linewidth]{kmeans_predictions.png}
 \caption{Color-Filtering Based Image Segmentation
 \cite{b5}}
 \label{fig2:kmeans}
@@ -143,9 +143,9 @@ The Unet model was trained in 50 epochs, which reached the early stopping condit
 \label{fig3}
 \end{figure}
 
-\begin{figure}[b]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{Dryoutputgrass.png}
+\includegraphics[width=\linewidth]{unet_predictions.png}
 \caption{Unet-Based Image Segmentation
 \cite{b5}}
 \label{fig2:filtering}
@@ -211,6 +211,9 @@ The final step involves converting the meter distances obtained from the previou
 \]
 
 This conversion factor enables the translation of local pixel positions, measured in meters, into global coordinates.
+
+
+
 
 \section{Conclusion}\label{Conclusion}
 The paper addresses the growing need for precise navigation systems utilized by autonomous agricultural mobile robots. It presents a hardware setup and an image processing procedure for acquiring live aerial images of agricultural fields and identifying the global coordinates of the waypoints placed within the field. These coordinates serve as reference points for mobile robot navigation systems. The environmental information of the field is gathered using high-resolution RGB aerial images acquired by cameras mounted on UAVs, along with the global coordinates of the UAV acquired by GPS modules. A radio transmission system facilitates data transfer from the UAV position to the processing unit. The procedure for extracting the global coordinates of the path from the acquired aerial images is defined as an image processing algorithm encompassing image segmentation, crop row detection, and waypoint generation.
