@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_grammarly_denali_app=self.webpackChunk_grammarly_denali_app||[]).push([[2501],{7813:(n,a,t)=>{var u,e;t.d(a,{C:()=>e,D:()=>u}),function(n){n.ESC_CODE=27,n.ENTER_CODE=13,n.SPACE_CODE=32}(u||(u={})),function(n){n.isLeftMouseButtom=function(n){return 1===n.which||0===n.button}}(e||(e={}))}}]);

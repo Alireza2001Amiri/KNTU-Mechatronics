@@ -28,7 +28,7 @@
 \maketitle
 
 \begin{abstract}
-As autonomous agriculture evolves, using wheeled mobile robots for various tasks necessitates precise waypoint generation to accurately define the robots' paths. This paper introduces a method that leverages aerial imagery to detect crop positions and determine waypoints. A specialized hardware setup, consisting of a high-resolution camera, wireless transmitter, and receiver, is developed to capture and transmit live images of the agricultural field. In the image processing stage, crops are identified through two parallel techniques—Unet and K-means clustering. Subsequently, the Hough Transform is applied to detect crop row lines, refined through filtering to ensure that a single, accurate line represents each row. Finally, by selecting specific points on the paths between these rows and converting them into global coordinates, the system facilitates real-time crop detection and precise waypoint generation, supporting autonomous navigation for agricultural robots.
+In autonomous agriculture, using wheeled mobile robots for various tasks requires the precise generation of waypoints to define the robots' paths accurately. This article presents a method that utilizes aerial imagery to detect crop positions and establish waypoints. A specialized hardware setup comprising a high-resolution camera, wireless transmitter, and receiver has been developed to capture and transmit live images of the agricultural field. In the image processing stage, crops are identified using two parallel techniques—Unet and K-means clustering. Subsequently, the integration of linear regression and Hough Transform is examined to detect crop row lines, refined through filtering to ensure that a single, accurate line represents each row. Finally, specific points on the paths between these rows are selected and converted into global coordinates, enabling the system to support real-time crop detection and precise waypoint generation, thus facilitating autonomous navigation for agricultural robots.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -36,30 +36,27 @@ Crop Row Detection, Hough Transform, Image Processing
 \end{IEEEkeywords}
 
 \section{Introduction}
-The integration of advanced technologies, such as artificial intelligence, sensing systems, and autonomous robots, is crucial in addressing global food challenges by enhancing agricultural productivity and sustainability \cite{b2,b3}. Precision Agriculture (PA) has emerged as a smart management system that optimizes input distribution, such as water and fertilizers, based on site-specific needs, thereby improving crop yield and resource-use efficiency while minimizing environmental impact \cite{b5,b6}. 
+Integrating advanced technologies, such as artificial intelligence, sensing systems, and autonomous robots, is crucial in addressing global food challenges by enhancing agricultural productivity and sustainability \cite{b2,b3}. Precision Agriculture (PA) has emerged as an intelligent management system that optimizes input distribution, such as water and fertilizers, based on site-specific needs, thereby improving crop yield and resource-use efficiency while minimizing environmental impact \cite{b5,b6}.
 Mobile robots in precision agriculture have been utilized in various field tasks, such as fertilization, irrigation, weeding, harvesting, and crop picking \cite{b2,b3}.
 
-In precision agriculture, traditional GPS-based path planning for agricultural machinery remains common, yet it presents challenges, such as the risk of seedling injury due to deviations between the ideal path and the actual crop rows \cite{b1}. To address these issues, the use of machine vision-based crop row detection on unmanned agricultural machinery has gained attention, allowing for real-time, precise path planning that minimizes crop damage \cite{b1,b8}. However, the unstructured agricultural environment complicates accurate navigation and autonomous operations, necessitating the integration of onboard sensors, such as scanning lasers and machine vision cameras, to enhance the robot's ability to sense and interact with its surroundings \cite{b2,b3}. Despite these advancements, ground-based platforms face challenges, including soil compaction and vibrations from uneven terrain, which can be mitigated by utilizing UAVs for high-resolution, low-altitude aerial sensing \cite{b10}.
+IIn precision agriculture, traditional GPS-based path planning for agricultural machinery remains common. However, it presents challenges, such as the risk of seedling injury due to deviations between the ideal path and the actual crop rows \cite{b1}. To address these issues, machine vision-based crop row detection on unmanned agricultural machinery has gained attention, allowing for real-time, precise path planning that minimizes crop damage \cite{b1,b8}. However, the unstructured agricultural environment complicates accurate navigation and autonomous operations, necessitating the integration of onboard sensors, such as scanning lasers and machine vision cameras, to enhance the robot's ability to sense and interact with its surroundings \cite{b2,b3}. Despite these advancements, ground-based platforms face challenges, including soil compaction and vibrations from uneven terrain, which can be mitigated by utilizing UAVs for high-resolution, low-altitude aerial sensing \cite{b10}.
 
-Unmanned Aerial Vehicles (UAVs) have increasingly become a vital tool in precision agriculture, offering a flexible, cost-effective platform for high-resolution remote sensing  \cite{b9,b12}. UAVs can capture detailed imagery under different conditions, providing fine spatial resolutions and covering significant areas, which is essential for monitoring crop variability and supporting temporal analysis \cite{b10,b12}. These platforms excel in applications such as vegetation segmentation, weed management, and crop row detection, filling the gap between terrestrial and satellite-based remote sensing \cite{b7,b13}. Despite certain limitations, such as flight endurance, the ability to conduct self-automated flights and provide timely data collection makes UAVs an indispensable tool in modern agriculture \cite{b11,b13}. However, aerial image post-processing is necessary to differentiate crop rows from soil and weeds, highlighting the complexity of their integration in precision farming \cite{b6}.
-The initial step in the procedure of crop row detection is semantic segmentation of aerial images, to determine the positions where vegetation exists. Different approaches were experimented in previous works in order to achieve a trusted and accurate model for segmentation. 
-
+Unmanned Aerial Vehicles (UAVs) have increasingly become a vital tool in precision agriculture, offering a flexible, cost-effective platform for high-resolution remote sensing  \cite{b9,b12}. UAVs can capture detailed imagery under different conditions, providing fine spatial resolutions and covering significant areas, essential for monitoring crop variability and supporting temporal analysis \cite{b10,b12}. These platforms excel in vegetation segmentation, weed management, and crop row detection applications, filling the gap between terrestrial and satellite-based remote sensing \cite{b7,b13}. Despite certain limitations, such as flight endurance, the ability to conduct self-automated flights and provide timely data collection makes UAVs indispensable in modern agriculture \cite{b11,b13}. However, aerial image post-processing is necessary to differentiate crop rows from soil and weeds, highlighting the complexity of their integration in precision farming \cite{b6}.
+The initial step in the procedure of crop row detection is semantic segmentation of aerial images to determine the positions where vegetation exists. Previous works experimented with different approaches to achieve a trusted and accurate segmentation model.
 
 The literature on crop row detection encompasses a range of approaches, each employing distinct methodologies to enhance precision in agricultural applications. Vegetation indices (VIs) like NDVI, ExG, and SAVI are frequently utilized as inputs for various detection methods, including thresholding algorithms, K-means clustering, and the Minimum Distance to the Mean (MDM) classifier. These methods are instrumental in segmenting vegetation from soil backgrounds and effectively identifying crop rows \cite{b1,b6,b13}. Fusion approaches, which combine RGB and NDVI data, are also explored to improve segmentation processes, particularly for autonomous robotic navigation in agricultural fields \cite{b5}.
 
 AI-based approaches have gained prominence, particularly deep learning models, which have significantly improved detection accuracy. For instance, CRowNet, which combines a convolutional neural network (CNN) with the Hough transform, demonstrates robust detection capabilities across various crop types and field conditions, achieving high detection rates even in complex scenarios like curved or intersecting rows \cite{b8,b14}. Additionally, networks like U-Net, SegNet, and ModSegNet are used in conjunction with both traditional and deep learning-based semantic segmentation methods. These networks have shown varying degrees of effectiveness, with deep learning models generally outperforming classical approaches, particularly in challenging conditions where traditional methods may falter \cite{b5,b13}.
 
-Traditional computer vision techniques are widely employed in crop row detection, with the Hough Transform being a prevalent method for line detection \cite{b2,b15}. Despite its extensive use, the Hough Transform has inherent limitations such as high computational complexity and sensitivity to noise, which compromise its suitability for real-time applications \cite{b2}. To address these issues, various adaptations, including the Probabilistic and Multi-scale Hough Transforms, have been developed \cite{b2}. Moreover, combining the Hough Transform with deep learning has shown to improve detection accuracy \cite{b8}. Linear Regression is another commonly used technique, valued for its simplicity and computational efficiency, especially when integrated with preprocessing steps like image segmentation and feature extraction \cite{b2,b3}. Other methods such as the Horizontal Strips Method and Blob Analysis are also utilized in crop row detection. The Horizontal Strips Method enhances computational efficiency by bypassing additional segmentation steps but may suffer from accuracy issues due to factors like camera angle and missing rows \cite{b2}. Blob Analysis, which groups connected pixels into blobs to generate crop rows, can struggle in environments with high weed density \cite{b2}. The Random Sample Consensus algorithm is another approach, providing robust row detection by estimating mathematical models from data with outliers, though its effectiveness depends on factors such as the quality of extracted feature points \cite{b2}. Machine learning methods, including clustering techniques like K-means and deep learning models such as Faster R-CNN, YOLOv3, and SegNet, are increasingly being applied in this domain \cite{b2,b5}. These methods offer significant advantages, although challenges remain, particularly in handling varying field conditions and limited annotated data \cite{b2,b5}.
+Traditional computer vision techniques are widely employed in crop row detection, with the Hough Transform being a prevalent method for line detection \cite{b2,b15}. Despite its extensive use, the Hough Transform has inherent limitations, such as high computational complexity and sensitivity to noise, which compromise its suitability for real-time applications \cite{b2}. To address these issues, various adaptations, including the Probabilistic and Multi-scale Hough Transforms, have been developed \cite{b2}. Moreover, combining the Hough Transform with deep learning has been shown to improve detection accuracy \cite{b8}. Linear regression is another commonly used technique, valued for its simplicity and computational efficiency, especially when integrated with preprocessing steps like image segmentation and feature extraction \cite{b2,b3}. Other methods, such as the Horizontal Strips Method and Blob Analysis, are also utilized in crop row detection. The Horizontal Strips Method enhances computational efficiency by bypassing additional segmentation steps but may suffer from accuracy issues due to factors like camera angle and missing rows \cite{b2}. Blob Analysis, which groups connected pixels into blobs to generate crop rows, can struggle in environments with high weed density \cite{b2}. The Random Sample Consensus algorithm is another approach, providing robust row detection by estimating mathematical models from data with outliers. However, its effectiveness depends on factors such as the quality of extracted feature points \cite{b2}. Machine learning methods, including clustering techniques like K-means and deep learning models such as Faster R-CNN, YOLOv3, and SegNet, are increasingly being applied in this domain \cite{b2,b5}. These methods offer significant advantages, although challenges remain, particularly in handling varying field conditions and limited annotated data \cite{b2,b5}.
 
 In precision agriculture, extracted crop row and inter-row information serves as a foundation for various tasks, such as guiding autonomous ground vehicles by defining navigation paths between rows, which are crucial for tasks like automatic path computation and the development of vigor maps for field partitioning \cite{b11}. For aerial images, the navigation path is identified as the line between two crop rows, while for unmanned agricultural vehicles, it is defined by the central angle between two rows\cite{b1}.
 
-This paper is structured as follows. In Section 
-\ref{Data Acquisition}
-, the hardware setup for aerial imagery data acquisition is detailed. Section
-\ref{Image Processing}
-explains the image processing procedure, including image splitting and the application of two methods—K-means clustering and the U-Net model—for detecting plants from aerial images. Section
-\ref{Crop Row Detection}
-describes the crop row detection process, utilizing both linear regression and the Hough transform. Section D outlines the path detection process. In Section E, the reconstruction of the split images is addressed. Finally, Section F explains the conversion of local waypoint positions in the images to global coordinates.
+The paper is structured as follows. In section \ref{Data Acquisition}, a hardware setup for aerial imagery data acquisition is introduced. Section \ref{Image Processing} explains the image processing procedure, including image splitting, applying two methods—K-means clustering and the U-Net model—for image segmentation, crop row detection using linear regression and Hough Transform, and the waypoint definition method. The section concludes with the reconstruction of split images. Section \ref{Image Coordination to Global Coordination Conversion} describes the process of converting the local position of waypoints found in previous sections to the global coordinate system. The experimental setup of the proposed system is presented in the Experiments section. Conclusions and further improvements are finally discussed in 
+\ref{Conclusion}.
+
+
+
 
 \begin{figure}[htbp]
 \includegraphics[width=\linewidth]{Block Diagram.png}
@@ -100,7 +97,7 @@ To address this issue, the aerial image is initially split into equal-sized sect
 \subsection{Image Segmentation}\label{Image Segmentation}
 image segmentation is the most computationally intensive section of this project, while its outcome has a direct impact on the overall accuracy of the system. Given the RGB sub-images, it is important to identify the exact locations where crops exist, which is done by processing the image and generation of a binary mask. In the following section, two semantic segmentation methods are introduced, and implemented and their results are assessed.
 
-\paragraph{Color Filtering Based Segmentation}
+\paragraph{Color-Filtering Based Image Segmentation}
 The initial idea for image segmentation of crops in agricultural fields was to apply color filtering methods to isolate the areas having a green color. This method was first applied by analyzing the green channel of the image but performed poorly due to a few reasons. First, the green channel filtering method is not able to filter white pixels, since they also include a large amount of green color. Second, there are sections of crops with color tending to yellow, and they were unintentionally removed from the layer mask. The two issues mentioned were later resolved using a prefiltering for white pixels removal and also by converting the RGB image to HSV format (Hue, Saturation, and Value) so that it would be possible to filter the pixels based on their color considering their Vegetation Index (VI). 
 
 Next, to further highlight the areas including crops, a K-means clustering method was applied to the color-based filtered image. The clustering helped in removing sparse pixels identified as crops and uniting the areas where crops exist. The Parameters of the K-means algorithm were defined in an iterative approach, to identify the best-performing setting, 
@@ -109,23 +106,14 @@ Without a high computational cost, this method can generate an accurate binary m
 \cite{b5} is shown.
 FIGURE shows the performance of this method on different sub-images.
 
-\begin{figure}[htbp]
-    \centering
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{Kmeans.png}
-        \caption{}
-        \label{fig2:kmeans}
-    \end{subfigure}\hfill
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{Dryoutputgrass.png}
-        \caption{}
-        \label{fig2:filtering}
-    \end{subfigure}
-    \caption{Crop Detection methods using (a) Color filtering and Kmeans clustering. (b) Unet model}
-    \label{fig2:combined}
-\end{figure}
+
+\begin{figure}[b]
+\centering
+\includegraphics[width=\linewidth]{Kmeans.png}
+\caption{Color-Filtering Based Image Segmentation}
+\label{fig2:kmeans}
+\end{figure}\hfill
+
 
 \paragraph{Unet-Based Image Segmentation}
 The limited performance of color-based image segmentation in crop fields indicates the need for an intelligent model that can recognize the crops using more complicated methods. Utilization of machine learning methods to train semantic segmentation models has proven to be a reliable solution for crop detection. In this approach, a Unet network was chosen as the main image segmentation tool and was trained on a dataset developed by
@@ -145,6 +133,13 @@ The Unet model was trained in 50 epochs, which reached the early stopping condit
 \caption{Unet model architecture}
 \label{fig3}
 \end{figure}
+
+    \begin{figure}[b]
+        \centering
+        \includegraphics[width=\linewidth]{Dryoutputgrass.png}
+        \caption{Unet-Based Image Segmentation}
+        \label{fig2:filtering}
+    \end{figure}
 
 \subsection{Crop Row Detection}\label{Crop Row Detection}
 The crop row detection process aims to assign a straight line with a defined slope and intercept to each group of white pixels annotated as crops in the binary mask. This study analyzed and implemented two approaches—linear regression and the Hough Transform—for this purpose.
@@ -181,7 +176,7 @@ Waypoints can be defined by choosing a specific number of equally spaced points 
 \subsection{Reconstruction of Aerial Image}\label{Reconstruction of Aerial Image}
 Following the image splitting described in section B.1, the image processing tasks outlined earlier will be applied to each segment of the leading aerial image. The goal is to determine and record the waypoint coordinates within each segment. Once the waypoint coordinates are computed, the initial image must be reconstructed and assembled. Subsequently, the waypoint coordinates need to be converted to align with the coordinates of the newly assembled image.
 
-\section{Image Coordination to Global Coordination Conversion}
+\section{Image Coordination to Global Coordination Conversion}\label{Image Coordination to Global Coordination Conversion}
 An analytical approach and mathematical algorithm are required to obtain the corresponding global coordinates of the points identified in the images. This process involves using the global coordinates of the camera at the time of image capture, along with the camera's height. The conversion process is broken down into two phases: first, converting pixel coordinates into meter distances, and second, converting these meter distances into the global coordinate system.
 
 \subsection{Pixel to Meter Conversion}\label{Pixel to Meter Conversion}
@@ -207,7 +202,14 @@ The final step involves converting the meter distances obtained from the previou
 This conversion factor enables the translation of local pixel positions, measured in meters, into global coordinates.
 
 \section{Conclusion}\label{Conclusion}
-In response to the increasing demand for autonomous agricultural systems, there is a critical need for accurate and reliable waypoints for navigation. This paper presents a solution involving a comprehensive live image capturing, processing, and waypoint generation system. The system is divided into three main sections: data acquisition, which captures and transmits aerial images; image processing, which identifies crops, determines crop rows, and assigns waypoints; and global coordinate conversion, which translates local waypoint coordinates into global coordinates. This approach ensures that the waypoints are precise and suitable for use by mobile robots or other devices requiring accurate navigation within agricultural fields.
+The paper addresses the growing need for precise navigation systems utilized by autonomous agricultural mobile robots. It presents a hardware setup and an image processing procedure for acquiring live aerial images of agricultural fields and identifying the global coordinates of the waypoints placed within the field. These coordinates serve as reference points for mobile robot navigation systems. The environmental information of the field is gathered using high-resolution RGB aerial images acquired by cameras mounted on UAVs, along with the global coordinates of the UAV acquired by GPS modules. Data transfer from the UAV position to the processing unit is facilitated through a radio transmission system. The procedure for extracting the global coordinates of the path from the acquired aerial images is defined as an image processing algorithm, encompassing image segmentation, crop row detection, and waypoint generation.
+
+Initially, the aerial image is divided into equal-sized sub-images to ensure uniform inputs for the image processing algorithms. Two image segmentation methods, namely color-filtering-based and Unet-based, are considered to identify the position of the crops in the resulting sub-images. The study demonstrates that while both methods can perform image segmentation tasks, the color filtering approach is ineffective in fields with other unwanted vegetation, such as grass and weeds. Conversely, the trained Unet model achieves an accuracy of 96\%\ and generates satisfactory predictions of the plants in different types of fields. Consequently, the Unet-based method is selected as the primary image segmentation tool.
+
+Following the segmentation step, linear regression and Hough Transform methods are evaluated for crop row detection. The analysis reveals that the complexity of the linear regression method, encompassing pixel clustering and line fitting, renders it a cumbersome solution for this task, leading to unsatisfactory crop row detections. In contrast, the implementation of Hough Transform as an alternative crop row detection approach results in more accurate estimated lines. Waypoints are defined as equally spaced points on the path, calculated as parallel lines between two crop rows.
+
+The global coordinates of the defined waypoints are obtained through the reconstruction and mapping of the local coordinates found in each sub-image to the local coordinates of the original image. Subsequently, the global coordinates are calculated based on the local position of pixels and the global coordinates of the camera at the time of image capture and stored for further utilization.
+
 
 
 \begin{thebibliography}{00}
