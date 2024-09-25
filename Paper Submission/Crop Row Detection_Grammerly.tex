@@ -132,11 +132,11 @@ Fig.
 
 \subsubsection{Unet-Based Image Segmentation}\leavevmode
 
-The limited performance of color-based image segmentation in crop fields indicates the need for an intelligent model that can recognize the crops using more complicated methods. Utilizing machine learning methods to train semantic segmentation models has proven to be a reliable solution for crop detection. In this approach, a Unet network was chosen as the primary image segmentation tool (Fig
+The limited performance of color-based image segmentation in crop fields indicates the need for an intelligent model that can recognize the crops using more complicated methods. Utilizing machine learning methods to train semantic segmentation models has proven to be a reliable solution for crop detection. In this approach, a Unet network was chosen as the primary image segmentation tool (Fig.
 \ref{fig_Unet})
 and was trained on a dataset developed by
 \cite{b5}
-. This dataset consists of quadcopter-based aerial images taken from three vineyards with corresponding ground truth images, indicating the location of vines in the vineyard.
+.This dataset consists of quadcopter-based aerial images taken from three vineyards with corresponding ground truth images, indicating the location of vines in the vineyard.
 
 The original and ground truth images were initially split into sub-images using a sliding window of size 512 by 512 pixels to use the annotated aerial images. The sliding step size was chosen to be 50 pixels, which resulted in more sample data for training. The resulting dataset consists of 5089 sub-images, which are divided into train, test, and validation sets with a ratio of 80\%\
 , 10\%\
@@ -201,7 +201,7 @@ Another widely used solution for crop row detection is the Hough Transform. This
 \end{figure}
 
 
-\subsection{Path Waypoint Detection}\label{Path Waypoint Detection}
+\subsection{Path Waypoint Detection}\label{Path Waypoint Generation}
 As stated in previous steps, the most computational parts of this study are image segmentation and crop row detection. Determining crop rows as lines with defined slope and intercept makes calculating a line indicating the path straightforward. The path is defined as a line parallel to two neighboring crop rows at an equal distance from each other.
 Waypoints can be defined by choosing a specific number of equally spaced points along each path. These waypoints' local coordination is stored for later study steps.
 
