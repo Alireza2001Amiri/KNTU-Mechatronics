@@ -37,7 +37,7 @@ Crop Row Detection, Hough Transform, Image Processing
 
 \section{Introduction}
 Integrating advanced technologies, such as artificial intelligence, sensing systems, and autonomous robots, is crucial in addressing global food challenges by enhancing agricultural productivity and sustainability \cite{b2,b3}. Precision Agriculture (PA) has emerged as an intelligent management system that optimizes input distribution, such as water and fertilizers, based on site-specific needs, thereby improving crop yield and resource-use efficiency while minimizing environmental impact \cite{b5,b6}.
-Mobile robots in precision agriculture have been utilized in various field tasks, such as fertilization, irrigation, weeding, harvesting, and crop picking \cite{b2,b3}.
+Thus, mobile robots in precision agriculture have been utilized in various field tasks, such as fertilization, irrigation, weeding, harvesting, and crop picking \cite{b2,b3}.
 
 In precision agriculture, traditional GPS-based path planning for agricultural machinery remains common. However, it presents challenges, such as the risk of seedling injury due to deviations between the ideal path and the actual crop rows \cite{b1}. To address these issues, machine vision-based crop row detection on unmanned agricultural machinery has gained attention, allowing for real-time, precise path planning that minimizes crop damage \cite{b1,b8}. However, the unstructured agricultural environment complicates accurate navigation and autonomous operations, necessitating the integration of onboard sensors, such as scanning lasers and machine vision cameras, to enhance the robot's ability to sense and interact with its surroundings \cite{b2,b3}. Despite these advancements, ground-based platforms face challenges, including soil compaction and vibrations from uneven terrain, which can be mitigated by utilizing UAVs for high-resolution, low-altitude aerial sensing \cite{b10}.
 
@@ -59,8 +59,11 @@ This paper presents a novel system for precise navigation in autonomous agricult
 The paper is structured as follows. Section \ref{Data Acquisition} introduces a hardware setup for aerial imagery data acquisition. Section \ref{Image Processing} explains the image processing procedure, including image splitting, applying two methods—K-means clustering and the U-Net model—for image segmentation, crop row detection using linear regression and Hough Transform, and the waypoint generation method. The section concludes with the reconstruction of split images. Section \ref{Image Coordination to Global Coordination Conversion} describes converting the local position of waypoints in previous sections to the global coordinate system. The experimental setup of the proposed system is presented in the Experiments section. Conclusions and further improvements are finally discussed in the concluding section
 \ref{Conclusion}.
 
+\section{Methodology}
 
-\section{Data Acquisition}\label{Data Acquisition}
+TEXTTTTTTT...................................
+
+\subsection{Data Acquisition}\label{Data Acquisition}
 In response to the need for live waypoint generation in agricultural fields, a hardware setup is required to provide the necessary environmental information. This system captures and transmits data to the software unit, where processing occurs. In the context of this project, a lightweight camera is crucial to take high-resolution aerial images of the target field, which will be the main data source for the image processing algorithm. Several cameras including Sequoia
 \cite{b9,b4,b7,b6}
 , Micasense RedEdge
@@ -78,7 +81,7 @@ Also, the last step of this project, converting pixel coordination on the images
 \end{figure}
 
 
-\section{Image Processing}\label{Image Processing}
+\subsection{Image Processing}\label{Image Processing}
 The main contribution of this paper lies in this section, which is to develop an image-processing pipeline to determine the position of pixels in the path between the crops. Fig.
 \ref{fig_procedure}
 shows the procedure proposed in this paper. Initially, the aerial images captured with the camera are split into sub-images. Then, during a semantic segmentation process, a binary mask is generated for each sub-image showing the positions of vegetation and background. In the next step, using Hough Transform, crop rows are detected. After defining the path line, a desired number of equally spaced points are selected on this line, and their position is recorded for later steps. Finally, the sub-images and their local waypoint coordinates are reconstructed, forming the original input image.
@@ -90,7 +93,8 @@ shows the procedure proposed in this paper. Initially, the aerial images capture
 \label{fig_procedure}
 \end{figure}
 
-\subsection{Preprocessing}\label{Preprocessing}
+\subsubsection{Preprocessing}\label{Preprocessing}\leavevmode
+
 High-resolution aerial images covering large areas are typically too large to be used directly in image processing algorithms and networks.
 Besides, due to the variation in terrain topologies, the non-uniform shape of crop rows -including curved or irregular shapes- is common in some agricultural fields
 \cite{b2, b3, b14}.
@@ -106,10 +110,11 @@ To address this issue, the aerial image is initially split into equal-sized sect
 \label{fig_Aerial}
 \end{figure}
 
-\subsection{Image Segmentation}\label{Image Segmentation}
+\subsubsection{Image Segmentation}\label{Image Segmentation}\leavevmode
+
 image segmentation is the most computationally intensive section of this project, while its outcome directly impacts the system's overall accuracy. Given the RGB sub-images, it is important to identify the exact locations where crops exist, which is done by processing the image and generation of a binary mask. The following section introduces and implements two semantic segmentation methods, and their results are assessed.
 
-\subsubsection{Color-Filtering Based Image Segmentation}\leavevmode
+\paragraph{Color-Filtering Based Image Segmentation}\leavevmode
 
 The initial idea for image segmentation of crops in agricultural fields was to apply color filtering methods to isolate the areas having a green color. This method was first used by analyzing the image's green channel but performed poorly for a few reasons. First, the green channel filtering method cannot filter white pixels since they also include a large amount of green color. Second, there are sections of crops with color tending to yellow, which were unintentionally removed from the layer mask. The two issues mentioned were later resolved using a prefiltering for white pixels removal and also by converting the RGB image to HSV format (Hue, Saturation, and Value) so that it would be possible to filter the pixels based on their color considering their Vegetation Index (VI).
 
@@ -130,7 +135,7 @@ Fig.
 \end{figure}
 
 
-\subsubsection{Unet-Based Image Segmentation}\leavevmode
+\paragraph{Unet-Based Image Segmentation}\leavevmode
 
 The limited performance of color-based image segmentation in crop fields indicates the need for an intelligent model that can recognize the crops using more complicated methods. Utilizing machine learning methods to train semantic segmentation models has proven to be a reliable solution for crop detection. In this approach, a Unet network was chosen as the primary image segmentation tool (Fig.
 \ref{fig_Unet})
@@ -161,10 +166,11 @@ The Unet model was trained in 50 epochs, which reached the early stopping condit
 \label{fig2:Unet_Segmentation}
 \end{figure}
 
-\subsection{Crop Row Detection}\label{Crop Row Detection}
+\subsubsection{Crop Row Detection}\label{Crop Row Detection}\leavevmode
+
 The crop row detection process aims to assign a straight line with a defined slope and intercept each group of white pixels annotated as crops in the binary mask. This study analyzed and implemented two approaches—linear regression and the Hough Transform—for this purpose.
 
-\subsubsection{Linear Regression}\label{Linear Regression}\leavevmode
+\paragraph{Linear Regression}\label{Linear Regression}\leavevmode
 
 This experiment used the binary layer mask of segmented crops to assign each pixel to its corresponding crop row. The first step involved determining the optimal angle of the crop rows through an iterative algorithm, assuming that all rows are parallel and share the same slope. Once the slope was defined, the x and y coordinates of the white pixels were rotated to align the crop rows vertically, simplifying the clustering process.
 
@@ -172,7 +178,7 @@ At this stage, the K-means algorithm was applied with a customized loss function
 
 Given the variability in the number of clusters across different images, the clustering algorithm is initiated by grouping nearby pixels. When a pixel was too distant from the existing group, it was treated as the center of a new cluster. However, this approach led to the formation of numerous unwanted clusters. To address this, adjacent clusters were merged in a subsequent step. Finally, the initial rotation of the pixel coordinates was reversed to visualize the resulting clusters. As illustrated in the results, even after merging close clusters, the method failed to accurately identify crop rows, leading to complications in the later stages of the project. To conclude the experiment, linear regression was applied to fit a line to the pixels within each cluster. However, the results indicated that this clustering and linear regression approach is ineffective for defining crop rows, necessitating exploring alternative methods.
 
-\subsubsection{Hough Transform}\label{Hough Transform}\leavevmode
+\paragraph{Hough Transform}\label{Hough Transform}\leavevmode
 
 Another widely used solution for crop row detection is the Hough Transform. This computer vision technique is primarily designed to identify geometric shapes in images, making it particularly effective for detecting lines and curves. In this project, the Hough Transform was employed as an alternative to the linear regression model for predicting crop rows. Implementing this method requires significantly less preprocessing and image manipulation, mainly due to the availability of related packages in OpenCV. When the Hough Transform was applied to the images, multiple lines were detected for each crop row, as illustrated in Fig.
 \ref{fig_Hough_Init}. These lines successfully covered the crop rows, indicating the method's effectiveness in line detection. To refine the results and assign only one line per crop row, the detected lines were merged, and a single line was calculated using the average slope and intercept of the detected lines. The final results are presented in Fig.
@@ -201,18 +207,21 @@ Another widely used solution for crop row detection is the Hough Transform. This
 \end{figure}
 
 
-\subsection{Path Waypoint Detection}\label{Path Waypoint Generation}
+\subsubsection{Path Waypoint Generation}\label{Path Waypoint Generation}\leavevmode
+
 As stated in previous steps, the most computational parts of this study are image segmentation and crop row detection. Determining crop rows as lines with defined slope and intercept makes calculating a line indicating the path straightforward. The path is defined as a line parallel to two neighboring crop rows at an equal distance from each other.
 Waypoints can be defined by choosing a specific number of equally spaced points along each path. These waypoints' local coordination is stored for later study steps.
 
-\subsection{Reconstruction of Aerial Image}\label{Reconstruction of Aerial Image}
+\subsubsection{Reconstruction of Aerial Image}\label{Reconstruction of Aerial Image}\leavevmode
+
 Following the image splitting described in section
 \ref{Preprocessing}, the image processing tasks outlined earlier will be applied to each segment of the leading aerial image. The goal is to determine and record the waypoint coordinates within each segment. Once the waypoint coordinates are computed, the initial image must be reconstructed and assembled. Subsequently, the waypoint coordinates need to be converted to align with the coordinates of the newly assembled image.
 
-\section{Image Coordination to Global Coordination Conversion}\label{Image Coordination to Global Coordination Conversion}
+\subsection{Image Coordination to Global Coordination Conversion}\label{Image Coordination to Global Coordination Conversion}
 An analytical approach and mathematical algorithm are required to obtain the corresponding global coordinates of the points identified in the images. This process involves using the global coordinates of the camera at the time of image capture, along with the camera's height. The conversion process is broken down into two phases: first, converting pixel coordinates into meter distances, and second, converting these meter distances into the global coordinate system.
 
-\subsection{Pixel to Meter Conversion}\label{Pixel to Meter Conversion}
+\subsubsection{Pixel to Meter Conversion}\label{Pixel to Meter Conversion}\leavevmode
+
 Assuming the camera is positioned at the center of the image at a height of \( h \), and given the angle \( \theta \) (defined as the angle between the standard line from the camera to the ground and the line connecting the camera to the edge of the image), the conversion from pixel position to ground distance is described by the following equations:
 \[
 \tan \theta = \frac{x}{h} \implies x = \tan \theta  \cdot h
@@ -226,7 +235,8 @@ If the image length in pixels is denoted as \( L \), then:
 
 Using these equations, the position of a pixel with coordinations \((x, y)\) in the image can be determined relative to the camera's position on the ground.
 
-\subsection{Meter to Global Coordination Conversion}\label{Meter to Global Coordination Conversion}
+\subsubsection{Meter to Global Coordination Conversion}\label{Meter to Global Coordination Conversion}\leavevmode
+
 The final step involves converting the meter distances obtained from the previous calculations into global coordinates. The relationship between meters and degrees of latitude or longitude is given by:
 \[
 1 \text{ (m)} = 0.00001^\circ

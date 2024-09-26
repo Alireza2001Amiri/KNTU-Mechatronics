@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.5)  24 SEP 2024 14:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.5)  26 SEP 2024 13:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -315,56 +315,56 @@ lenovo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 <GoPro.jpg, id=8, 631.35875pt x 460.72125pt>
 File: GoPro.jpg Graphic file (type jpg)
 <use GoPro.jpg>
-Package pdftex.def Info: GoPro.jpg  used on input line 75.
+Package pdftex.def Info: GoPro.jpg  used on input line 78.
 (pdftex.def)             Requested size: 252.0pt x 183.89154pt.
 
 [2]
-<Block Diagram.png, id=12, 1002.6258pt x 885.18706pt>
+<Block Diagram.png, id=13, 1002.6258pt x 885.18706pt>
 File: Block Diagram.png Graphic file (type png)
 <use Block Diagram.png>
-Package pdftex.def Info: Block Diagram.png  used on input line 87.
+Package pdftex.def Info: Block Diagram.png  used on input line 90.
 (pdftex.def)             Requested size: 252.0pt x 222.48482pt.
-<Aerial Image2.png, id=14, 1310.28651pt x 820.89293pt>
+<Aerial Image2.png, id=15, 1310.28651pt x 820.89293pt>
 File: Aerial Image2.png Graphic file (type png)
 <use Aerial Image2.png>
-Package pdftex.def Info: Aerial Image2.png  used on input line 103.
+Package pdftex.def Info: Aerial Image2.png  used on input line 107.
 (pdftex.def)             Requested size: 252.0pt x 157.8752pt.
  [3 <./GoPro.jpg> <./Block Diagram.png> <./Aerial Image2.png>]
 <kmeans_predictions.png, id=21, 754.82pt x 518.93875pt>
 File: kmeans_predictions.png Graphic file (type png)
 <use kmeans_predictions.png>
-Package pdftex.def Info: kmeans_predictions.png  used on input line 126.
+Package pdftex.def Info: kmeans_predictions.png  used on input line 131.
 (pdftex.def)             Requested size: 252.0pt x 173.24574pt.
 <UNET.png, id=22, 4021.52437pt x 861.9703pt>
 File: UNET.png Graphic file (type png)
 <use UNET.png>
-Package pdftex.def Info: UNET.png  used on input line 151.
+Package pdftex.def Info: UNET.png  used on input line 156.
 (pdftex.def)             Requested size: 252.0pt x 54.00453pt.
 <unet_predictions.png, id=23, 754.82pt x 487.8225pt>
 File: unet_predictions.png Graphic file (type png)
 <use unet_predictions.png>
-Package pdftex.def Info: unet_predictions.png  used on input line 158.
+Package pdftex.def Info: unet_predictions.png  used on input line 163.
 (pdftex.def)             Requested size: 252.0pt x 162.8577pt.
  [4 <./kmeans_predictions.png (PNG copy)> <./UNET.png> <./unet_predictions.png 
 (PNG copy)>]
 <Hough initial2.png, id=28, 563.10374pt x 256.70906pt>
 File: Hough initial2.png Graphic file (type png)
 <use Hough initial2.png>
-Package pdftex.def Info: Hough initial2.png  used on input line 185.
+Package pdftex.def Info: Hough initial2.png  used on input line 191.
 (pdftex.def)             Requested size: 176.39923pt x 80.41722pt.
 <Hough Revised2.png, id=29, 503.63156pt x 249.18094pt>
 File: Hough Revised2.png Graphic file (type png)
 <use Hough Revised2.png>
-Package pdftex.def Info: Hough Revised2.png  used on input line 194.
+Package pdftex.def Info: Hough Revised2.png  used on input line 200.
 (pdftex.def)             Requested size: 176.39923pt x 87.27545pt.
 
 [5 <./Hough initial2.png> <./Hough Revised2.png>]
-<Setup of experiment.png, id=39, 1083.04625pt x 813.0375pt>
+<Setup of experiment.png, id=39, 1373.13pt x 813.0375pt>
 File: Setup of experiment.png Graphic file (type png)
 <use Setup of experiment.png>
-Package pdftex.def Info: Setup of experiment.png  used on input line 247.
-(pdftex.def)             Requested size: 252.0pt x 189.16573pt.
- [6 <./Setup of experiment.png>]
+Package pdftex.def Info: Setup of experiment.png  used on input line 257.
+(pdftex.def)             Requested size: 252.0pt x 149.2062pt.
+ [6 <./Setup of experiment.png (PNG copy)>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -386,7 +386,7 @@ L3 programming layer <2024-01-22>
  ) 
 Here is how much of TeX's memory you used:
  4491 strings out of 474542
- 79985 string characters out of 5743975
+ 79986 string characters out of 5743975
  1941978 words of memory out of 5000000
  26726 multiletter control sequences out of 15000+600000
  588968 words of font info for 87 fonts, out of 8000000 for 9000
@@ -401,7 +401,7 @@ onts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/lenovo/AppData/Local/Programs
 s/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/lenovo/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/lenovo/AppData/Local/Prog
 rams/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on "Crop Row Detection_Grammerly.pdf" (7 pages, 18990833 bytes).
+Output written on "Crop Row Detection_Grammerly.pdf" (7 pages, 19640339 bytes).
 
 PDF statistics:
  82 PDF objects out of 1000 (max. 8388607)
