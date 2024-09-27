@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.5)  27 SEP 2024 15:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.5)  27 SEP 2024 16:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -313,88 +313,83 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-
-Underfull \hbox (badness 3907) in paragraph at lines 47--48
-\OT1/ptm/m/n/10 par-tic-u-larly deep learn-ing mod-els, which have sig-nif-i-
- []
-
-[1{C:/Users/lenovo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/l
-enovo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
+ [1{C:/Users/lenovo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/
+lenovo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-Underfull \vbox (badness 1968) has occurred while \output is active []
-
 <Block Diagram.png, id=8, 994.31474pt x 860.013pt>
 File: Block Diagram.png Graphic file (type png)
 <use Block Diagram.png>
-Package pdftex.def Info: Block Diagram.png  used on input line 75.
+Package pdftex.def Info: Block Diagram.png  used on input line 77.
 (pdftex.def)             Requested size: 252.0pt x 217.95532pt.
- [2 <./Block Diagram.png>]
-<GoPro.jpg, id=16, 631.35875pt x 460.72125pt>
+<GoPro.jpg, id=10, 631.35875pt x 460.72125pt>
 File: GoPro.jpg Graphic file (type jpg)
 <use GoPro.jpg>
 Package pdftex.def Info: GoPro.jpg  used on input line 93.
 (pdftex.def)             Requested size: 176.39923pt x 128.71986pt.
+
+Underfull \vbox (badness 5637) has occurred while \output is active []
+
+ [2 <./Block Diagram.png> <./GoPro.jpg>]
 <Aerial Image2.png, id=17, 1310.28651pt x 820.89293pt>
 File: Aerial Image2.png Graphic file (type png)
 <use Aerial Image2.png>
 Package pdftex.def Info: Aerial Image2.png  used on input line 116.
 (pdftex.def)             Requested size: 176.39923pt x 110.50261pt.
- [3 <./GoPro.jpg> <./Aerial Image2.png>]
-<UNET.png, id=22, 4021.52437pt x 861.9703pt>
+<UNET.png, id=18, 4021.52437pt x 861.9703pt>
 File: UNET.png Graphic file (type png)
 <use UNET.png>
 Package pdftex.def Info: UNET.png  used on input line 148.
 (pdftex.def)             Requested size: 252.0pt x 54.00453pt.
-<waypoint_geometry.png, id=23, 294.1389pt x 289.8027pt>
+ [3 <./Aerial Image2.png> <./UNET.png>]
+<waypoint_geometry.png, id=24, 294.1389pt x 289.8027pt>
 File: waypoint_geometry.png Graphic file (type png)
 <use waypoint_geometry.png>
-Package pdftex.def Info: waypoint_geometry.png  used on input line 184.
-(pdftex.def)             Requested size: 176.39923pt x 173.80336pt.
- [4 <./UNET.png> <./waypoint_geometry.png>]
+Package pdftex.def Info: waypoint_geometry.png  used on input line 185.
+(pdftex.def)             Requested size: 151.20154pt x 148.97809pt.
+ [4 <./waypoint_geometry.png>]
 <Setup of experiment.png, id=32, 1373.13pt x 813.0375pt>
 File: Setup of experiment.png Graphic file (type png)
 <use Setup of experiment.png>
-Package pdftex.def Info: Setup of experiment.png  used on input line 241.
+Package pdftex.def Info: Setup of experiment.png  used on input line 242.
 (pdftex.def)             Requested size: 252.0pt x 149.2062pt.
 
-Underfull \hbox (badness 1424) in paragraph at lines 251--253
-[]\OT1/ptm/m/n/10 The Color-Filtering based im-age seg-men-ta-tion method
+Underfull \hbox (badness 4378) in paragraph at lines 252--254
+[]\OT1/ptm/m/n/10 The Color-filtering-based im-age seg-men-ta-tion method
  []
 
 <kmeans_predictions.png, id=33, 754.82pt x 518.93875pt>
 File: kmeans_predictions.png Graphic file (type png)
 <use kmeans_predictions.png>
-Package pdftex.def Info: kmeans_predictions.png  used on input line 262.
+Package pdftex.def Info: kmeans_predictions.png  used on input line 263.
 (pdftex.def)             Requested size: 176.39923pt x 121.26964pt.
 <unet_predictions.png, id=34, 754.82pt x 487.8225pt>
 File: unet_predictions.png Graphic file (type png)
 <use unet_predictions.png>
-Package pdftex.def Info: unet_predictions.png  used on input line 271.
+Package pdftex.def Info: unet_predictions.png  used on input line 272.
 (pdftex.def)             Requested size: 176.39923pt x 113.99815pt.
 <Kmeans_Row_Result.png, id=35, 243.5499pt x 178.5069pt>
 File: Kmeans_Row_Result.png Graphic file (type png)
 <use Kmeans_Row_Result.png>
-Package pdftex.def Info: Kmeans_Row_Result.png  used on input line 293.
+Package pdftex.def Info: Kmeans_Row_Result.png  used on input line 294.
 (pdftex.def)             Requested size: 126.0pt x 92.35016pt.
 <Hough initial2.png, id=36, 563.10374pt x 256.70906pt>
 File: Hough initial2.png Graphic file (type png)
 <use Hough initial2.png>
-Package pdftex.def Info: Hough initial2.png  used on input line 302.
+Package pdftex.def Info: Hough initial2.png  used on input line 303.
 (pdftex.def)             Requested size: 176.39923pt x 80.41722pt.
 <Hough Revised2.png, id=37, 503.63156pt x 249.18094pt>
 File: Hough Revised2.png Graphic file (type png)
 <use Hough Revised2.png>
-Package pdftex.def Info: Hough Revised2.png  used on input line 311.
+Package pdftex.def Info: Hough Revised2.png  used on input line 312.
 (pdftex.def)             Requested size: 176.39923pt x 87.27545pt.
-[5 <./Setup of experiment.png (PNG copy)>]
-Underfull \hbox (badness 7832) in paragraph at lines 331--332
+[5 <./Setup of experiment.png (PNG copy)> <./kmeans_predictions.png (PNG copy)>
+ <./unet_predictions.png (PNG copy)>]
+Underfull \hbox (badness 7832) in paragraph at lines 333--334
 \OT1/ptm/m/n/10 Unet-based|were eval-u-ated. While the Color-Filtering
  []
 
-[6 <./kmeans_predictions.png (PNG copy)> <./unet_predictions.png (PNG copy)> <.
-/Kmeans_Row_Result.png> <./Hough initial2.png> <./Hough Revised2.png>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -406,9 +401,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[7
-
-]
+[6 <./Kmeans_Row_Result.png> <./Hough initial2.png> <./Hough Revised2.png>]
 (Waypoint Generation based on Crop Row Detection Using Aerial Imaging Systems.a
 ux)
  ***********
@@ -419,11 +412,11 @@ L3 programming layer <2024-01-22>
 Here is how much of TeX's memory you used:
  4521 strings out of 474542
  81288 string characters out of 5743975
- 1940978 words of memory out of 5000000
+ 1941978 words of memory out of 5000000
  26755 multiletter control sequences out of 15000+600000
  590075 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,8n,77p,1403b,492s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 67i,8n,77p,1425b,492s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/lenovo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
 /cmmi10.pfb><C:/Users/lenovo/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmr10.pfb><C:/Users/lenovo/AppData/Local/Programs/MiKTeX/fonts/type1
@@ -434,9 +427,9 @@ s/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/lenovo/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/lenovo/AppData/Local/Prog
 rams/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
 Output written on "Waypoint Generation based on Crop Row Detection Using Aerial
- Imaging Systems.pdf" (7 pages, 19814621 bytes).
+ Imaging Systems.pdf" (6 pages, 19812615 bytes).
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
+ 81 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
