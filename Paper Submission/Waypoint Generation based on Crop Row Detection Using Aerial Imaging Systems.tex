@@ -28,11 +28,11 @@
 	\maketitle
 	
 	\begin{abstract}
-		In autonomous agriculture, using wheeled mobile robots for various tasks requires the precise generation of waypoints to accurately define the robots' paths. This article presents a method that utilizes aerial imagery to detect crop positions and establish waypoints. In the image processing stage of this paper, crop detection was assessed using two methods of color-filtering-based and Unet-based image segmentation, with Unet outperforming with 96\%\ of accuracy and 84\%\ of IoU and showing satisfying results on different fields, considering the presence of unwanted vegetation. Subsequently, two crop row detection processes, including Linear Regression and the Hough Transform, were analyzed, presenting the convenient implementation of the Hough Transform compared to linear regression while having more accurate predictions. A mathematical conversion factor was derived to convert the position of pixels selected as path points to the global coordination systems. Finally, a specialized hardware setup comprising a high-resolution camera and a radio transmission system has been developed to capture and transmit live images of the agricultural field, enabling the system to support real-time crop detection and waypoint generation. Lastly, the potential of the introduced system is discussed to be implemented in future works.
+		In autonomous agriculture, using wheeled mobile robots for various tasks requires the precise generation of waypoints to accurately define the robots' paths. This article presents a method that utilizes aerial imagery to detect crop positions and establish waypoints. In the image processing stage of this paper, crop detection was assessed using two methods of color-filtering-based and Unet-based image segmentation, with Unet outperforming with 96\%\ accuracy and 84\%\ of IoU and showing satisfying results on different fields, considering the presence of unwanted vegetation. Subsequently, two crop row detection processes, including Linear Regression and the Hough Transform, were analyzed, presenting the convenient implementation of the Hough Transform compared to linear regression while having more accurate predictions. A mathematical conversion factor was derived to convert the position of pixels selected as path points to the global coordination systems. Finally, a specialized hardware setup comprising a high-resolution camera and a radio transmission system has been developed to capture and transmit live images of the agricultural field, enabling the system to support real-time crop detection and waypoint generation. Lastly, the potential of the introduced system is discussed to be implemented in future works.
 	\end{abstract}
 	
 	\begin{IEEEkeywords}
-		Crop Row Detection, Hough Transform, Precision Agriculture, Unet, Image processing
+		Crop Row Detection, Hough Transform, Precision Agriculture, Unet, Image Processing
 	\end{IEEEkeywords}
 	
 	\section{Introduction}
@@ -40,7 +40,7 @@
 	
 	Despite the widespread use of GPS-based path planning in PA, issues like crop damage from misalignment with rows persist \cite{b1}. Machine vision-based detection is gaining traction for precise, real-time path planning, reducing crop injury \cite{b1,b8}. However, the unstructured nature of agricultural environments complicates navigation. Robotic systems incorporate sensors such as scanning lasers and machine vision cameras to tackle this issue. \cite{b2,b3}, while UAVs provide high-resolution aerial sensing, overcoming the limitations of ground-based platforms \cite{b10}.
 	
-	UAVs are essential in PA, offering versatile remote sensing capabilities \cite{b9,b12}. They provide valuable data for monitoring crop variability and support temporal and spatial analyses \cite{b10,b12}. Applications in vegetation segmentation, crop row detection, and ground-based sensing gaps \cite{b7,b13}. Despite challenges like limited flight endurance, UAVs' ability for autonomous flights and timely data collection make them crucial in modern agriculture \cite{b11,b13}. Nevertheless, incorporating aerial imagery into precision farming requires advanced post-processing to distinguish crop rows from soil and weeds accurately \cite{b6}.
+	UAVs are essential in PA, offering versatile remote sensing capabilities \cite{b9,b12}. They provide valuable data for monitoring crop variability and support temporal and spatial analyses \cite{b10,b12}. Applications in vegetation segmentation, crop row detection, and ground-based sensing gaps are examples of their usage \cite{b7,b13}. Despite challenges like limited flight endurance, UAVs' ability for autonomous flights and timely data collection make them crucial in modern agriculture \cite{b11,b13}. Nevertheless, incorporating aerial imagery into precision farming requires advanced post-processing to distinguish crop rows from soil and weeds accurately \cite{b6}.
 	
 	Crop row detection methods utilize various approaches to enhance precision in agricultural applications. Techniques such as vegetation indices (NDVI, ExG, SAVI), along with thresholding, clustering, and the Minimum Distance to the Mean (MDM) classifier, effectively segment vegetation from soil \cite{b1,b6,b13}. Fusion methods that combine RGB and NDVI data further improve segmentation for autonomous navigation \cite{b5}.
 	
@@ -52,7 +52,7 @@
 	
 	
 	
-	This paper presents a novel system for precise navigation in autonomous agricultural robots through real-time aerial image acquisition and waypoint generation. The system integrates a quadcopter-mounted camera and a radio transmission system to capture and relay high-resolution RGB images and GPS coordinates. Aerial images are divided into sub-images and processed using color filtering and a U-Net model for crop identification. Crop row detection is refined via linear regression and the Hough Transform, and waypoints are generated by mapping pixel data to GPS coordinates. 
+	This paper presents a novel system for precise navigation in autonomous agricultural robots through real-time aerial image acquisition and waypoint generation. The system integrates a quadcopter-mounted camera and a radio transmission system to capture and relay high-resolution RGB images and GPS coordinates. Aerial images are divided into sub-images and processed using color filtering and a UNet model for crop detection. Crop row detection is refined via linear regression and the Hough Transform, and waypoints are generated by mapping pixel data to GPS coordinates. 
 	
 	Key contributions include: 
 	
@@ -65,7 +65,7 @@
 	
 	This approach enhances the navigation capabilities of agricultural robots in complex environments.
 	
-	The rest of this paper is structured as follows. Section \ref{Data Acquisition} introduces a hardware setup for aerial imagery data acquisition. Section \ref{Image Processing} explains the image processing procedure, including image splitting, applying two methods—K-means clustering and the U-Net model—for image segmentation, crop row detection using linear regression and Hough Transform, and the waypoint generation method. The section concludes with the reconstruction of split images. Section \ref{Waypoint Generation} describes converting the local position of waypoints in previous sections to the global coordinate system. The experimental setup of the proposed system is presented in \ref{Experimental Setup}. Conclusions and further improvements are finally discussed in the concluding section
+	The rest of this paper is structured as follows. Section \ref{Data Acquisition} introduces a hardware setup for aerial imagery data acquisition. Section \ref{Image Processing} explains the image processing procedure, including image splitting, applying two methods—K-means clustering and the U-Net model—for image segmentation, crop row detection using linear regression and Hough Transform, and the waypoint generation method. The section concludes with the reconstruction of split images. Section \ref{Waypoint Generation} introduces a conversion factor to convert the local position of waypoints obtained by previous sections to the global coordinate system. The experimental setup of the proposed system is presented in \ref{Experimental Setup}. The results achieved by developed systems are presented in \ref{Results and Discussion}. Conclusions and further improvements are finally discussed in
 	\ref{Conclusion}.
 	
 	\section{Methodology}
@@ -202,7 +202,7 @@
 		\label{eq:2}
 	\end{equation}
 	
-	using equations (\ref{eq:1}) and (\ref{eq:2}) implies:
+	using Eq.\ref{eq:1} and Eq.\ref{eq:2} implies:
 	
 	\begin{equation}
 		1 \text{ (pixel)} = 2h \cdot \frac{\tan \theta}{L} \text{ (m)}
@@ -210,16 +210,16 @@
 	\end{equation}
 	
 	
-	Achieving equation (\ref{eq:3}), the actual distance between the position of the quadcopter and any point on the ground corresponding to coordination \((x, y)\) in the image can be calculated. 
+	Achieving Eq.\ref{eq:3}, the actual distance between the position of the quadcopter and any point on the ground corresponding to coordination \((x, y)\) in the image can be calculated. 
 	
-	To generate the waypoints, which are in the form of latitude and longitude, a conversion factor of meter to global coordination is required, which is shown in equation (\ref{eq:4}) 
+	To generate the waypoints, which are in the form of latitude and longitude, a conversion factor of meter to global coordination is required, which is shown in Eq.\ref{eq:4} 
 	
 	\begin{equation}
 		1 \text{ (m)} = 0.00001^\circ
 		\label{eq:4}
 	\end{equation}
 	
-	Thus, using equations (\ref{eq:3}) and (\ref{eq:4}) implies the final conversion factor for calculation of the change in global coordination as defined in equation (\ref{eq:5}):
+	Thus, using Eq.\ref{eq:3} and Eq.\ref{eq:4} implies the final conversion factor for calculation of the change in global coordination as defined in Eq. \ref{eq:5}:
 	
 	\begin{equation}
 		1 \text{ (pixel)} = 0.00002 \times h \cdot \frac{\tan \theta}{L}^\circ
@@ -247,13 +247,13 @@
 	\section{Results and Discussion}\label{Results and Discussion}
 	
 	This section evaluates the performance of the methods mentioned earlier and presents the visual and statistical outputs of the image processing algorithms, including semantic segmentation and crop row detection. Subsequently, the results obtained from the experimental setup in waypoint generation are analyzed and discussed.
-	\subsection{Image Segmentation Results}
+	\subsection{Image Segmentation}
 	
 	The Color-filtering-based image segmentation method demonstrated the ability to produce an accurate binary mask indicating vegetation presence without high computational costs. However, the method exhibited limitations when applied to images from diverse fields with various crops. Due to its reliance on color filtering, it could not differentiate between crops and unwanted vegetation, such as grass and weeds. This issue aligns with observations reported in \cite{b5}, as illustrated in Fig.
 	\ref{fig2:kmeans}.
 	
 	
-	In contrast, the Unet-based segmentation method, trained over 50 epochs, reached an early stopping criterion at epoch 7, achieving an accuracy of 96\%\, IoU of 84\%\ and a loss of 0.09. The model effectively segmented crops under different conditions, even when unwanted vegetation was present, as demonstrated in Fig.
+	In contrast, the Unet-based segmentation method, trained over 50 epochs, reached an early stopping criterion at epoch 7, achieving an accuracy of 96\%\, IoU of 84\%\, F1 score of 0.91 and a loss of 0.09. The F1 score of the proposed method outperforms the mean measure of the corresponding test in \cite{b5}, which was reported as 0.77. The model effectively segmented crops under different conditions, even when unwanted vegetation was present, as demonstrated in Fig.
 	\ref{fig2:Unet_Segmentation}.
 	This highlights its robustness compared to the Color-Filtering method.
 	
@@ -278,9 +278,9 @@
 		\label{fig:Image_Segmentation_Results}
 	\end{figure}
 	
-	\subsection{Crop Row Detection Results}
+	\subsection{Crop Row Detection}
 	
-	Though implemented to detect crop rows, the linear regression approach proved ineffective. The method's complexity and computational intensity yielded unsatisfactory results, prompting exploring alternative techniques.(See Fig.\ref{fig_Linear_Regression})
+	In implementing crop row detection, the linear regression approach proved ineffective. The method's complexity and computational intensity yielded unsatisfactory results, prompting exploring alternative techniques.(See Fig.\ref{fig_Linear_Regression})
 	
 	In contrast, the Hough Transform method achieved satisfactory results with less computational overhead. Due to the availability of relevant packages in OpenCV, this method required minimal preprocessing. Upon application, the Hough Transform successfully detected multiple lines for each crop row, as shown in Fig. 
 	\ref{fig_Hough_Init}
@@ -292,7 +292,7 @@
 		\begin{subfigure}{\linewidth}
 			\centering
 			\includegraphics[width=0.5\linewidth]{Kmeans_Row_Result.png}
-			\caption{linear regression based crop row detection}
+			\caption{Linear regression based crop row detection}
 			\label{fig_Linear_Regression}
 		\end{subfigure}
 		
@@ -318,17 +318,17 @@
 		\label{fig:comparison}
 	\end{figure}
 	
-	\subsection{Waypoint Generation Results}
+	\subsection{Waypoint Generation}
 	
 	The waypoint generation system, combined with the hardware setup, successfully captured live aerial imagery using a quadcopter-mounted camera and transmitted these to a ground-based receiver via a radio transmission system. The experimental setup confirmed the feasibility of image transmission over varying distances to the processing unit, demonstrating the system’s potential for real-time data acquisition.
 	
-	The waypoint generation component also effectively converted local pixel positions within the images to global coordinates. The transformation described in equation (\ref{eq:5}) produced accurate global pixel coordinates and integrated with the quadcopter’s GPS data along the latitude and longitude axes, facilitating precise waypoint generation.
+	The waypoint generation component also effectively converted local pixel positions within the images to global coordinates. The transformation described in Eq.\ref{eq:5} produced accurate global pixel coordinates and integrated with the quadcopter’s GPS data along the latitude and longitude axes, facilitating precise waypoint generation.
 	
 	However, the system has yet to be tested in operational field environments. Therefore, while preliminary results are promising, further field experiments are necessary to validate the system’s performance under practical conditions. Future work will focus on fully implementing and assessing the image transmission and waypoint generation processes to ensure their robustness and reliability in real-world applications.
 	
 	
 	\section{Conclusion}\label{Conclusion}
-	This paper proposes a solution for precise navigation in autonomous agricultural robots, focusing on a hardware setup and image processing pipeline for acquiring live aerial images and identifying global waypoints within agricultural fields. A feasibility study demonstrates the potential of using a quadcopter-mounted camera, GPS, and a radio transmission system to capture and transmit high-resolution RGB images in real-time.
+	This paper proposed a solution for precise navigation in autonomous agricultural robots, focusing on a hardware setup and image processing pipeline for acquiring live aerial images and identifying global waypoints within agricultural fields. A feasibility study demonstrated the potential of using a quadcopter-mounted camera, GPS, and a radio transmission system to capture and transmit high-resolution RGB images in real-time.
 	
 	Two image segmentation methods—Color-Filtering and Unet-based—were evaluated. While the Color-Filtering method proved ineffective in the presence of unwanted vegetation, the Unet-based model demonstrated superior performance, achieving 96\%\ accuracy in segmenting crops, making it the preferred method.
 	
