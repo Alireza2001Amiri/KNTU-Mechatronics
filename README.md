@@ -7,11 +7,6 @@ Department of Mechatronics Engineering
 Khaje Nasir Toosi University of Technology (KNTU), Tehran, Iran  
 [ali.amiri@email.kntu.ac.ir](mailto:ali.amiri@email.kntu.ac.ir)
 
-**Saeed Khankalantary**  
-Department of Mechatronics Engineering  
-Khaje Nasir Toosi University of Technology (KNTU), Tehran, Iran  
-[s.kalantary@kntu.ac.ir](mailto:s.kalantary@kntu.ac.ir)
-
 ## **Abstract**
 
 As autonomous agriculture evolves, precise waypoint generation is crucial for defining the paths of autonomous robots. This project presents a method leveraging high-resolution aerial imagery to detect crop positions and determine waypoints. The approach includes:
